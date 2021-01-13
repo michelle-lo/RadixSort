@@ -10,4 +10,14 @@ public class Radix {
     return (x / ((int) Math.pow(10, col)));
   }
 
+  //return the number of digits in n.
+  public static int length(int n) {
+    String str = "" + n;
+    int len = str.length();
+    if (str.charAt(0) == '-') {
+      len--;
+    }
+    return len;
+  }
+
 }
