@@ -19,5 +19,14 @@ public class Radix {
     }
     return len;
   }
+  /*
+  Merge all of the linked lists in the bucket array into your original linked list.
+  */
+  public static void merge(MyLinkedList original,MyLinkedList[]buckets) {
+    for (int i = 0; i < buckets.length; i++) {
+      original.extend(buckets[i]);
+    }
+  }
+
 
 }
