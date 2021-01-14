@@ -9,12 +9,11 @@ public class Radix {
 
   //return the number of digits in n.
   public static int length(int n) {
-    String str = "" + n;
-    int len = str.length();
-    if (str.charAt(0) == '-') {
-      len--;
+    if (n == 0) {
+      return 1;
+    } else {
+      return (int) (Math.log10(Math.abs(n)) + 1);
     }
-    return len;
   }
 
   //Merge all of the linked lists in the bucket array into your original linked list.
@@ -34,20 +33,19 @@ public class Radix {
     int passes = data.size();
     int maxLen = 0;
     for (int i = 0; i < passes; i++) {
-      if (i == 0) { //don't get largest
-
+      if (i == 0) {
         while (data.size() > 0) {
           if (length(data.get(0)) > maxLen) {
             maxLen = length(data.get(0));
           }
-          int digit = nth(data.get(0), i); //n
+          int digit = nth(data.get(0), i);
           bucketArr[digit].add(data.remove(0));
         }
         passes = maxLen;
       } else {
         while (data.size() > 0) {
-          int digit = nth(data.get(0), i); //n
-          bucketArr[digit].add(data.remove(0)); //
+          int digit = nth(data.get(0), i);
+          bucketArr[digit].add(data.remove(0));
         }
       }
       merge(data, bucketArr);
