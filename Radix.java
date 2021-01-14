@@ -35,17 +35,20 @@ public class Radix {
     int maxLen = 0;
     for (int i = 0; i < passes; i++) {
       if (i == 0) { //don't get largest
-        for (int j = 0; j < data.size(); j++) { //edit get and size so that they arent together
-          if (length(data.get(j)) > maxLen) { //only need buckets and list
-              maxLen = length(data.get(j));
-            }
+
+        while (data.size() > 0) {
+          if (length(data.get(0)) > maxLen) {
+            maxLen = length(data.get(0));
+          }
+          int digit = nth(data.get(0), i); //n
+          bucketArr[digit].add(data.remove(0));
         }
         passes = maxLen;
-      }
-
-      while (data.size() > 0) {
-        int digit = nth(data.get(0), i); //n
-        bucketArr[digit].add(data.remove(0)); //
+      } else {
+        while (data.size() > 0) {
+          int digit = nth(data.get(0), i); //n
+          bucketArr[digit].add(data.remove(0)); //
+        }
       }
       merge(data, bucketArr);
     }
