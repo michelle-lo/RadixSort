@@ -19,14 +19,44 @@ public class Radix {
     }
     return len;
   }
-  /*
-  Merge all of the linked lists in the bucket array into your original linked list.
-  */
-  public static void merge(MyLinkedList original,MyLinkedList[]buckets) {
+
+  //Merge all of the linked lists in the bucket array into your original linked list.
+  public static void merge(SortableLinkedList original, SortableLinkedList[]buckets) {
     for (int i = 0; i < buckets.length; i++) {
       original.extend(buckets[i]);
     }
   }
+
+  //Write a method that sorts non-negative integer values
+  //Assume there are no negative values.
+  public static void radixSortSimple(SortableLinkedList data) {
+    SortableLinkedList[] bucketArr = new SortableLinkedList[10];
+    for (int i = 0; i < 10; i++) {
+      bucketArr[i] = new SortableLinkedList();
+    }
+    int passes = data.size();
+    int maxLen = 0;
+    for (int i = 0; i < passes; i++) {
+      if (i == 0) {
+        for (int j = 0; j < data.size(); j++) {
+          if (length(data.get(j)) > maxLen) {
+              maxLen = length(data.get(j));
+            }
+        }
+        passes = maxLen;
+
+      }
+      for (int j = 0; j < data.size(); j++) {
+        int digit = nth(data.get(j), i);
+        bucketArr[digit].add(data.get(j));
+      }
+      while (data.size() > 0) {
+        data.remove(0);
+      }
+      merge(data, bucketArr);
+    }
+  }
+
 
 
 }
