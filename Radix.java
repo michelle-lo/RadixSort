@@ -26,6 +26,7 @@ public class Radix {
   //Write a method that sorts non-negative integer values
   //Assume there are no negative values.
   public static void radixSortSimple(SortableLinkedList data) {
+
     SortableLinkedList[] bucketArr = new SortableLinkedList[10];
     for (int i = 0; i < 10; i++) {
       bucketArr[i] = new SortableLinkedList();
@@ -33,56 +34,53 @@ public class Radix {
     int passes = data.size();
     int maxLen = 0;
     for (int i = 0; i < passes; i++) {
-      if (i == 0) {
-        while (data.size() > 0) {
+      while (data.size() > 0) {
+        if (i == 0) {
           if (length(data.get(0)) > maxLen) {
             maxLen = length(data.get(0));
           }
+          if (data.size() == 1) {
+            passes = maxLen;
+          }
+        }
           int digit = nth(data.get(0), i);
           bucketArr[digit].add(data.remove(0));
         }
-        passes = maxLen;
-      } else {
-        while (data.size() > 0) {
-          int digit = nth(data.get(0), i);
-          bucketArr[digit].add(data.remove(0));
-        }
-      }
       merge(data, bucketArr);
     }
+
   }
+
 
   //Write a method that sorts any integer values:
   public static void radixSort(SortableLinkedList data) {
-    SortableLinkedList[] bucketArr = new SortableLinkedList[19];
-    for (int i = 0; i < 19; i++) {
+    SortableLinkedList[] bucketArr = new SortableLinkedList[20];
+    for (int i = 0; i < 20; i++) {
       bucketArr[i] = new SortableLinkedList();
     }
     int passes = data.size();
     int maxLen = 0;
     for (int i = 0; i < passes; i++) {
-      if (i == 0) {
-        for (int j = 0; j < data.size(); j++) {
-          if (length(data.get(j)) > maxLen) {
-              maxLen = length(data.get(j));
-            }
-        }
-        passes = maxLen;
-      }
-      for (int j = 0; j < data.size(); j++) {
-        int digit = -1;
-        if (data.get(j) <= 0) {
-          digit = 10 - nth(data.get(j), i);
-        } else {
-          digit = 10 + nth(data.get(j), i);
-        }
-        bucketArr[digit].add(data.get(j));
-      }
       while (data.size() > 0) {
-        data.remove(0);
-      }
+        if (i == 0) {
+          if (length(data.get(0)) > maxLen) {
+            maxLen = length(data.get(0));
+          }
+          if (data.size() == 1) {
+            passes = maxLen;
+          }
+        }
+          int digit = nth(data.get(0), i);
+          if (data.get(0) <= 0) {
+            digit = 9 - nth(data.get(0), i);
+          } else {
+            digit = 9 + nth(data.get(0), i);
+          }
+          bucketArr[digit].add(data.remove(0));
+        }
       merge(data, bucketArr);
     }
+
   }
 
 }
